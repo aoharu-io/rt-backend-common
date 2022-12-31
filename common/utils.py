@@ -12,7 +12,8 @@ class SignatureTool:
 
     def __init__(self, cmcls) -> None:
         with open("secret.key", "rb") as f:
-            self.chiper = cmcls(f.read())
+            self.secret_key = f.read()
+        self.chiper = cmcls(self.secret_key)
 
     def make_auth_headers(self) -> dict:
         "Bot専用APIを使う際に必要なヘッダーを作ります。"
