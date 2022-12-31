@@ -1,0 +1,20 @@
+__pycache__
+
+# OS
+.DS_Store
+
+# General
+.*
+!.gitignore
+*.key
+*.toml
+!*.template.toml
+!pyopenjtalk_pyproject_ovverride.toml
+crowdin.yml
+
+venv
+env
+opt/
+
+# Individual
+*.*-workspace
