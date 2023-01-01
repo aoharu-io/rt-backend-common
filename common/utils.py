@@ -1,10 +1,16 @@
 # RT Lib - Utils
 
+from typing import Any
+from collections.abc import Callable, Coroutine
+
+from concurrent.futures import ThreadPoolExecutor
+from asyncio import AbstractEventLoop
+
 from time import time
 from uuid import uuid4
 
 
-__all__ = ("SignatureTool",)
+__all__ = ("SignatureTool", "CodeRunner")
 
 
 class SignatureTool:
@@ -23,3 +29,27 @@ class SignatureTool:
     def signature(self) -> str:
         "Bot専用のバックエンドのエンドポイントへのアクセスに使用する署名を返します。"
         return self.chiper.encrypt(f"RT-Discord-Bot_{time()}_{uuid4()}")
+
+
+class CodeRunner:
+    "文字列状態のコードを動かすための関数を実装したクラスです。"
+
+    def __init__(
+        self, loop: AbstractEventLoop,
+        executor: ThreadPoolExecutor | None = None
+    ) -> None:
+        self.loop, self.executor = loop, executor or ThreadPoolExecutor(2)
+
+    def update_globals(self, globals_: dict[str, Any]) -> None:
+        "コード内で使える変数を編集するための辞書が渡される関数です。"
+
+    def _generate_function(self, code: str, **globals_: Any) -> Callable[[], Coroutine]:
+        # 指定されたコードを実行するコルーチン関数を作ります。
+        exec("async def _run_go():\n  {}".format(code.replace("\n", "\n  ")), globals_)
+        return globals_["_run_go"]
+
+    async def run(self, code: str, **globals_: Any) -> Any:
+        "指定されたコードを非同期で実行します。"
+        return await (await self.loop.run_in_executor(
+            self.executor, self._generate_function, code, **globals_
+        ))()
