@@ -53,3 +53,7 @@ class CodeRunner:
         return await (await self.loop.run_in_executor(
             self.executor, self._generate_function, code, **globals_
         ))()
+
+    async def _rn(self, _, code: str) -> str:
+        # ipcs用。
+        return repr(await self.run(code))
