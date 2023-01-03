@@ -40,7 +40,7 @@ class CodeRunner:
     ) -> None:
         self.loop, self.executor = loop, executor or ThreadPoolExecutor(2)
 
-    def update_globals(self, globals_: dict[str, Any]) -> None:
+    def update_globals(self, _: dict[str, Any]) -> None:
         "コード内で使える変数を編集するための辞書が渡される関数です。"
 
     def _generate_function(self, code: str, **globals_: Any) -> Callable[[], Coroutine]:
@@ -50,6 +50,7 @@ class CodeRunner:
 
     async def run(self, code: str, **globals_: Any) -> Any:
         "指定されたコードを非同期で実行します。"
+        self.update_globals(globals_)
         return await (await self.loop.run_in_executor(
             self.executor, self._generate_function, code, **globals_
         ))()
