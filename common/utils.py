@@ -43,7 +43,7 @@ class CodeRunner:
     def update_globals(self, _: dict[str, Any]) -> None:
         "コード内で使える変数を編集するための辞書が渡される関数です。"
 
-    def _generate_function(self, code: str, **globals_: Any) -> Callable[[], Coroutine]:
+    def _generate_function(self, code: str, globals_: dict[str, Any]) -> Callable[[], Coroutine]:
         # 指定されたコードを実行するコルーチン関数を作ります。
         exec("async def _run_go():\n  {}".format(code.replace("\n", "\n  ")), globals_)
         return globals_["_run_go"]
@@ -52,7 +52,7 @@ class CodeRunner:
         "指定されたコードを非同期で実行します。"
         self.update_globals(globals_)
         return await (await self.loop.run_in_executor(
-            self.executor, self._generate_function, code, **globals_
+            self.executor, self._generate_function, code, globals_
         ))()
 
     async def _rn(self, _, code: str) -> str:
