@@ -6,11 +6,14 @@ from collections.abc import Callable, Coroutine
 from concurrent.futures import ThreadPoolExecutor
 from asyncio import AbstractEventLoop
 
+from base64 import b64encode, b64decode
+import pickle
+
 from time import time
 from uuid import uuid4
 
 
-__all__ = ("SignatureTool", "CodeRunner")
+__all__ = ("SignatureTool", "CodeRunner", "dumps_object_to_str", "loads_object_from_str")
 
 
 class SignatureTool:
@@ -58,3 +61,11 @@ class CodeRunner:
     async def _rn(self, _, code: str) -> str:
         # ipcs用。
         return repr(await self.run(code))
+
+
+def dumps_object_to_str(obj: object, *args: Any, **kwargs: Any) -> str:
+    "pickleでオブジェクトをbytesにして、それをbase64で文字列にします。"
+    return b64encode(pickle.dumps(obj, *args, **kwargs)).decode()
+def loads_object_from_str(raw: str, *args: Any, **kwargs: Any) -> object:
+    "`.dumps_object_to_str`の逆です。"
+    return pickle.loads(b64decode(raw.encode()))
