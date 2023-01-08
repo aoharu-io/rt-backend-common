@@ -1,6 +1,6 @@
 # RT Lib - Utils
 
-from typing import Any
+from typing import TypeVar, Generic, Protocol, Any
 from collections.abc import Callable, Coroutine
 
 from concurrent.futures import ThreadPoolExecutor
@@ -13,7 +13,10 @@ from time import time
 from uuid import uuid4
 
 
-__all__ = ("SignatureTool", "CodeRunner", "dumps_object_to_str", "loads_object_from_str")
+__all__ = (
+    "SignatureTool", "CodeRunner", "dumps_object_to_str", "loads_object_from_str",
+    "Plan"
+)
 
 
 class SignatureTool:
@@ -69,3 +72,24 @@ def dumps_object_to_str(obj: object, *args: Any, **kwargs: Any) -> str:
 def loads_object_from_str(raw: str, *args: Any, **kwargs: Any) -> object:
     "`.dumps_object_to_str`の逆です。"
     return pickle.loads(b64decode(raw.encode()))
+
+
+class CustomerManagerProtocol(Protocol):
+    "`.Plan`を使う上で顧客管理用クラスに実装していないといけないことをまとめたプロトコルのクラスです。"
+
+    async def check(self, guild_id: int) -> bool:
+        "指定されたサーバーIDのサーバーがプラスを購読している稼働かを返します。"
+        ...
+
+ValueT = TypeVar("ValueT")
+class Plan(Generic[ValueT]):
+    "プランの設定を格納するための適切な設定を返すための関数を実装したクラスです。"
+
+    _customers: CustomerManagerProtocol
+
+    def __init__(self, free: ValueT, plus: ValueT) -> None:
+        self.free, self.plus = free, plus
+
+    async def judge(self, guild_id: int) -> ValueT:
+        "指定されたサーバーIDに適切な値を返します。"
+        return self.plus if await self._customers.check(guild_id) else self.free
