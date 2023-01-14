@@ -1,4 +1,4 @@
-# RT Lib - Log
+# RT Lib - Event Log
 
 from typing import TypeAlias, Literal, TypedDict
 
@@ -11,7 +11,7 @@ PlaceValue: TypeAlias =  str | None
 
 
 class Place(TypedDict):
-    "ログでログの機能が動作した場所を表すデータの型です。"
+    "イベントログでログの機能が動作した場所を表すデータの型です。"
 
     type: PlaceType
     value: PlaceValue
