@@ -1,4 +1,9 @@
-# RT Lib - Utils
+"rtlib - Utils"
+
+__all__ = (
+    "SignatureTool", "CodeRunner", "dumps_object_to_str", "loads_object_from_str",
+    "Plan"
+)
 
 from typing import TypeVar, Generic, Protocol, Any
 from collections.abc import Callable, Coroutine
@@ -11,12 +16,6 @@ import pickle
 
 from time import time
 from uuid import uuid4
-
-
-__all__ = (
-    "SignatureTool", "CodeRunner", "dumps_object_to_str", "loads_object_from_str",
-    "Plan"
-)
 
 
 class SignatureTool:

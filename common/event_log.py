@@ -1,9 +1,8 @@
-# RT Lib - Event Log
-
-from typing import TypeAlias, Literal, TypedDict, get_args
-
+"rtlib - Event Log"
 
 __all__ = ("ResultType", "RESULT_TYPES", "PlaceType", "PlaceValue", "Place", "Feature")
+
+from typing import TypeAlias, Literal, TypedDict, get_args
 
 
 ResultType: TypeAlias = Literal["error", "warning", "success", "unknown"]
