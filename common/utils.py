@@ -89,6 +89,6 @@ class Plan(Generic[ValueT]):
     def __init__(self, free: ValueT, plus: ValueT) -> None:
         self.free, self.plus = free, plus
 
-    async def judge(self, guild_id: int) -> ValueT:
+    async def get(self, guild_id: int) -> ValueT:
         "指定されたサーバーIDに適切な値を返します。"
         return self.plus if await self._customers.check(guild_id) else self.free
