@@ -23,6 +23,8 @@ class Feature(TypedDict):
     "機能情報のデータの型です。"
 
     name: str
-    "機能名です。"
-    link: str
-    "機能のダッシュボードへのリンクです。"
+    "名前へのlocaleのキーです。"
+    dashboard: str | None
+    "ダッシュボードへのパスです。"
+    document: str | None
+    "ドキュメントへのパスです。"
