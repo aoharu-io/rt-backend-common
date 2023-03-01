@@ -1,2 +1,7 @@
-# rt-lib
-rt-backendとrt-botの両方だけで使うような機能を実装したPythonモジュールです。
+# RT Common
+`rt-backend-*`で始まる名前のリポジトリで共通して使うようなものを管理するためのリポジトリです。
+
+## Scripts
+`scripts`フォルダにあるファイル達の説明は以下です。
+- `config_hash.py` - `config.template.toml`のハッシュを生成します。
+- `make_key.py` - `secret.key`ファイルを生成します。
