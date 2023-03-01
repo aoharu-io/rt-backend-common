@@ -5,7 +5,7 @@ __all__ = ("is_bot", "IPCS_SERVER_ID")
 from core.rextlib.common.chiper import ChiperManager
 
 
-IPCS_SERVER_ID = "IPCS-SERVER"
+IPCS_SERVER_ID = "BEACON"
 def is_bot(chiper: ChiperManager, credentials: str) -> bool:
     "Botかどうかをチェックします。"
     try:
