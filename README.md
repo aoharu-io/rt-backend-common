@@ -3,5 +3,5 @@
 
 ## Scripts
 `scripts`フォルダにあるファイル達の説明は以下です。
-- `config_hash.py` - `config.template.toml`のハッシュを生成します。
+- `config_hash.py` - `core/config/types_.py`のハッシュを生成します。
 - `make_key.py` - `secret.key`ファイルを生成します。
