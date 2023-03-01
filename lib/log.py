@@ -11,8 +11,8 @@ from core.rextlib.common.log import set_output_handler as original_set_output_ha
 
 
 def set_output_handler(
-    logger: Logger, id_: str, default: str
-        = "data/logs/main!id!.log"
+    logger: Logger, id_: str = "",
+    default: str = "data/logs/main!id!.log"
 ) -> None:
     """ログの出力を設定します。
     出力先のファイルパスは`RT_LOG_PATH`で変更が可能です。
