@@ -1,10 +1,13 @@
 # RT Lib - Config
 
-__all__ = ("IpcsServer", "config_file_path", "get_config_file_path")
+__all__ = ("IpcsServer", "config_file_path", "get_file_path")
 
 from typing import TypedDict
 
-from os import getenv
+from pathlib import PurePath
+
+from os import getenv, mkdir
+from os.path import exists
 
 from core.rextlib.common.hash import get_file_hash
 
@@ -18,7 +21,7 @@ class IpcsServer(TypedDict):
 
 config_file_path = getenv("RT_CONFIG_FILE_PATH", "config.toml")
 REPLACEMENT = "!config_types_hash!"
-def get_config_file_path() -> str:
+def get_file_path() -> PurePath:
     """設定ファイルのパスを取得します。
     環境変数`RT_CONFIG_FILE_PATH`からパスを取得しますが、もしそれが設定されていないのなら、`config.toml`が代わりに返されます。
     もし、パスに文字列`.REPLACEMENT`が含まれているのなら、それは`core/config/types_.py`のsha256のハッシュ値と置き換えられます。"""
@@ -28,4 +31,7 @@ def get_config_file_path() -> str:
             REPLACEMENT,
             get_file_hash("core/config/types_.py")
         )
-    return config_file_path
+    path = PurePath(config_file_path)
+    if not exists(path.parent):
+        mkdir(path.parent)
+    return path
