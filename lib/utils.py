@@ -92,3 +92,7 @@ class Plan(Generic[ValueT]):
     async def get(self, guild_id: int) -> ValueT:
         "指定されたサーバーIDに適切な値を返します。"
         return self.plus if await self._customers.check(guild_id) else self.free
+
+    def make_text(self, unit: str = "個") -> str:
+        "このクラスのインスタンスの簡単な説明を作ります。"
+        return f"無料枠は{self.free}{unit}、プラスの人は{self.plus}{unit}。"
