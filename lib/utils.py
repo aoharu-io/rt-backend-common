@@ -18,10 +18,17 @@ from time import time
 from uuid import uuid4
 
 
+class ChiperManager(Protocol):
+    "rextlibにある`ChiperManager`にあるメソッドの中で、`.SignatureTool`が使うものだけのメソッドの型情報を実装したプロトコルです。"
+
+    def __init__(self, key: bytes) -> None: ...
+    def encrypt(self, text: str) -> str: ...
+
+
 class SignatureTool:
     "署名を作るためのクラスです。"
 
-    def __init__(self, cmcls) -> None:
+    def __init__(self, cmcls: type[ChiperManager]) -> None:
         with open("secret.key", "rb") as f:
             self.secret_key = f.read()
         self.chiper = cmcls(self.secret_key)
