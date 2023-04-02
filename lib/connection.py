@@ -1,7 +1,7 @@
 "RT Common - RT Connection"
 
 __all__ = (
-    "get_channel_from_id", "get_shard_ids_from_channel", "bot_filter",
+    "get_channel_from_id", "get_shard_ids_from_id", "bot_filter",
     "ConnectionClient"
 )
 
@@ -15,7 +15,7 @@ def get_channel_from_id(id_: str) -> str:
     return id_[:id_.find("_")]
 
 
-def get_shard_ids_from_channel(id_: str) -> Iterator[int]:
+def get_shard_ids_from_id(id_: str) -> Iterator[int]:
     "IDからシャードIDを取り出します。"
     return map(int, id_[id_.find("_")+1:].split(","))
 
@@ -47,7 +47,7 @@ class ConnectionClient(Client):
         "指定されたチャンネルに接続しているクライアントの中で、指定されたIDのサーバーを管理対象としているクライアントを探します。"
         for id_ in self.select_all_by_channel(channel):
             try:
-                for shard_id in map(int, id_.replace(f"{channel}_", "").split(",")):
+                for shard_id in get_shard_ids_from_id(id_):
                     if (guild_id >> 22) % shard_count == shard_id:
                         return id_
             except ValueError:
