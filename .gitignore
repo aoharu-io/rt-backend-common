@@ -9,6 +9,7 @@ __pycache__
 *.key
 *.toml
 !*.template.toml
+!pyproject.toml
 !pyopenjtalk_pyproject_ovverride.toml
 crowdin.yml
 
