@@ -1,5 +1,3 @@
-"RT Lib - Log"
-
 __all__ = ("set_file_handler",)
 
 from os import getenv
