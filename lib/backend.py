@@ -1,4 +1,3 @@
-"RT Lib - バックエンドのためのライブラリです。"
 
 __all__ = ("is_bot", "IPCS_SERVER_ID")
 
