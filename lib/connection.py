@@ -1,4 +1,3 @@
-
 __all__ = (
     "get_channel_from_id", "get_shard_ids_from_id", "bot_filter",
     "ConnectionClient"

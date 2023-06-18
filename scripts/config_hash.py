@@ -1,4 +1,3 @@
-
 from sys import path
 path.append(__file__[:__file__.find("/core/common")])
 

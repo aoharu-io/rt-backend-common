@@ -1,4 +1,3 @@
-
 __all__ = ("is_bot", "IPCS_SERVER_ID")
 
 from core.rextlib.common.chiper import ChiperManager

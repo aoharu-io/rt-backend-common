@@ -1,4 +1,3 @@
-
 __all__ = ("set_file_handler",)
 
 from os import getenv
