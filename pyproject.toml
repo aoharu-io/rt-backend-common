@@ -1,6 +1,12 @@
 [project]
 name = "rt-common"
 version = "0.0.0"
+classifiers = [
+    "Private :: Do Not Upload",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+    "Framework :: AsyncIO"
+]
 dependencies = [
     "ipcs~=0.2.0",
 ]
