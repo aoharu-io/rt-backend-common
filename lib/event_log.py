@@ -2,7 +2,9 @@
 
 __all__ = ("ResultType", "RESULT_TYPES", "PlaceType", "PlaceValue", "Place", "Feature")
 
-from typing import TypeAlias, Literal, TypedDict, get_args
+from typing import TypeAlias, Literal, get_args
+
+from typing_extensions import TypedDict
 
 
 ResultType: TypeAlias = Literal["error", "warning", "success", "unknown"]
